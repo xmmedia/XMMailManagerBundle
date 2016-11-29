@@ -1,0 +1,6 @@
+services:
+    xm_mail_manager.manager:
+        class:     XM\MailManagerBundle\Component\MailManager
+        arguments: ['@mailer', '@twig', '@translator']
+        calls:
+            - [setFrom, ['%from_email%', '%from_name%']]
