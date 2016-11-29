@@ -130,7 +130,7 @@ class MailSender
     }
 
     /**
-     * Renders the template, creates the message and sends it.
+     * Creates the message and sends it.
      *
      * @param string|array $to The to email address(es).
      * @return int
@@ -140,9 +140,8 @@ class MailSender
      */
     public function send($to)
     {
-        if (!$this->template instanceof \Twig_TemplateInterface) {
-            throw new \Exception('The template must be set for sending email');
-        }
+        // will throw exception
+        $this->testValidateMessageParts();
 
         $message = \Swift_Message::newInstance()
              ->setSubject($this->messageParts['subject'])
@@ -155,10 +154,33 @@ class MailSender
         if (!empty($this->messageParts['body_html'])) {
             $message->setBody($this->messageParts['body_html'], 'text/html');
         }
-        if (!empty($this->messageParts['body_text'])) {
+        // don't add if plain text version is empty string when trimmed
+        if (trim($this->messageParts['body_text']) != '') {
             $message->addPart($this->messageParts['body_text'], 'text/plain');
         }
 
         return $this->mailManager->send($message);
+    }
+
+    /**
+     * Tests if the message is valid.
+     * A valid contains a subject and either an HTML or plain text body.
+     *
+     * @throws \Exception
+     */
+    protected function testValidateMessageParts()
+    {
+        $messageParts = $this->messageParts;
+        foreach ($messageParts as $key => $value) {
+            $messageParts[$key] = trim($value);
+        }
+
+        if (empty($messageParts['subject'])) {
+            throw new \Exception('Message subject needs to be set');
+        }
+
+        if (empty($messageParts['body_html']) && empty($messageParts['body_text'])) {
+            throw new \Exception('HTML or plain text message parts needs to be set');
+        }
     }
 }
