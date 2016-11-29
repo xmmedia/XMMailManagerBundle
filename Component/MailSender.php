@@ -121,7 +121,7 @@ class MailSender
             ->mergeGlobals($parameters);
 
         // render the blocks of the email
-        $this->messageParts['subject']  = $template
+        $this->messageParts['subject']   = $template
             ->renderBlock('subject', $parameters);
         $this->messageParts['body_html'] = $template
             ->renderBlock('body_html', $parameters);
