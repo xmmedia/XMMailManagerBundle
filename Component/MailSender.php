@@ -117,6 +117,8 @@ class MailSender
 
         $template = $this->mailManager->getTwig()
             ->loadTemplate($template);
+        $parameters = $this->mailManager->getTwig()
+            ->mergeGlobals($parameters);
 
         // render the blocks of the email
         $this->messageParts['subject']  = $template
