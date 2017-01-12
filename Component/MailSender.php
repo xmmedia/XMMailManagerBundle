@@ -72,15 +72,17 @@ class MailSender
      * Sets the from email & name.
      *
      * @param string $fromEmail The from email address.
-     * @param string $fromName  The from name.
+     * @param string|null $fromName  The from name.
      * @return MailSender
      */
-    public function setFrom($fromEmail, $fromName)
+    public function setFrom($fromEmail, $fromName = null)
     {
         $translator = $this->mailManager->getTranslator();
 
         $this->fromEmail = $translator->trans($fromEmail);
-        $this->fromName = $translator->trans($fromName);
+        if (null !== $fromName) {
+            $this->fromName = $translator->trans($fromName);
+        }
 
         return $this;
     }
