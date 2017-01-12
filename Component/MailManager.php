@@ -99,7 +99,7 @@ class MailManager
      */
     public function getSender()
     {
-        $sender = new MailSender($this);
+        $sender = $this->createSender();
 
         $sender->setFrom($this->fromEmail, $this->fromName);
 
@@ -139,5 +139,15 @@ class MailManager
     public function getTwig()
     {
         return $this->twig;
+    }
+
+    /**
+     * Create the mail sender.
+     *
+     * @return MailSender
+     */
+    protected function createSender()
+    {
+        return new MailSender($this);
     }
 }
