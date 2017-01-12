@@ -134,6 +134,39 @@ class MailSender
     }
 
     /**
+     * @param $subject
+     * @return MailSender
+     */
+    public function setSubject($subject)
+    {
+        $this->messageParts['subject'] = trim($subject);
+
+        return $this;
+    }
+
+    /**
+     * @param $content
+     * @return MailSender
+     */
+    public function setBodyHtml($content)
+    {
+        $this->messageParts['body_html'] = $content;
+
+        return $this;
+    }
+
+    /**
+     * @param $content
+     * @return MailSender
+     */
+    public function setBodyText($content)
+    {
+        $this->messageParts['body_text'] = $content;
+
+        return $this;
+    }
+
+    /**
      * Creates the message and sends it.
      *
      * @param string|array $to The to email address(es).
