@@ -180,10 +180,25 @@ class MailSender
         // will throw exception
         $this->testValidateMessageParts();
 
+        $message = $this->createMessage($to);
+
+        return $this->mailManager->send($message);
+    }
+
+    /**
+     * Creates the Swift mailer Message object.
+     * Sets the subject, from address, to address, reply to (optional),
+     * and body (html or plain text).
+     *
+     * @param string $to
+     * @return \Swift_Mime_SimpleMessage
+     */
+    protected function createMessage($to)
+    {
         $message = \Swift_Message::newInstance()
-             ->setSubject($this->messageParts['subject'])
-             ->setFrom($this->fromEmail, $this->fromName)
-             ->setTo($to)
+            ->setSubject($this->messageParts['subject'])
+            ->setFrom($this->fromEmail, $this->fromName)
+            ->setTo($to)
         ;
         if (!empty($this->replyToEmail)) {
             $message->setReplyTo($this->replyToEmail);
@@ -196,7 +211,7 @@ class MailSender
             $message->addPart($this->messageParts['body_text'], 'text/plain');
         }
 
-        return $this->mailManager->send($message);
+        return $message;
     }
 
     /**
