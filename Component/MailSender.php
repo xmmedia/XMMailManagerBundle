@@ -72,7 +72,7 @@ class MailSender
      * Sets the from email & name.
      *
      * @param string $fromEmail The from email address.
-     * @param string|null $fromName  The from name.
+     * @param string $fromName  The from name.
      * @return MailSender
      */
     public function setFrom($fromEmail, $fromName = null)
