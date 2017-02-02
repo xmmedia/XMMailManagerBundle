@@ -48,6 +48,11 @@ class MailSender
     protected $replyToEmail;
 
     /**
+     * @var array
+     */
+    protected $bccAddresses = [];
+
+    /**
      * The "rendered" email message parts.
      *
      * @var array
@@ -167,6 +172,20 @@ class MailSender
     }
 
     /**
+     * Adds a BCC address to the email.
+     *
+     * @param string $address
+     * @param string $name
+     * @return MailSender
+     */
+    public function addBcc($address, $name = null)
+    {
+        $this->bccAddresses[$email] = $name;
+
+        return $this;
+    }
+
+    /**
      * Creates the message and sends it.
      *
      * @param string|array $to The to email address(es).
@@ -202,6 +221,11 @@ class MailSender
         ;
         if (!empty($this->replyToEmail)) {
             $message->setReplyTo($this->replyToEmail);
+        }
+        if (!empty($this->bccAddresses)) {
+            foreach ($this->bccAddresses as $email => $name) {
+                $message->addBcc($email, $name);
+            }
         }
         if (!empty($this->messageParts['body_html'])) {
             $message->setBody($this->messageParts['body_html'], 'text/html');
