@@ -122,12 +122,14 @@ class MailSender
             $template = 'Mail/'.$template.'.html.twig';
         }
 
+        // @todo loadTemplate is an internal method, so we shouldn't be calling it
         $template = $this->mailManager->getTwig()
             ->loadTemplate($template);
         $parameters = $this->mailManager->getTwig()
             ->mergeGlobals($parameters);
 
         // render the blocks of the email
+        // @todo we can use hasBlock() to see if the template has each of these blocks
         $this->messageParts['subject']   = $template
             ->renderBlock('subject', $parameters);
         $this->messageParts['body_html'] = $template
