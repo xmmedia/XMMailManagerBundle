@@ -113,10 +113,10 @@ class MailManager
     /**
      * Sends an email.
      *
-     * @param \Swift_Mime_Message $message
+     * @param \Swift_Message $message
      * @return int
      */
-    public function send(\Swift_Mime_Message $message)
+    public function send(\Swift_Message $message)
     {
         return $this->mailer->send($message);
     }

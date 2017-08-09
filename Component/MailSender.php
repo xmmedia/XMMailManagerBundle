@@ -216,7 +216,7 @@ class MailSender
      */
     protected function createMessage($to)
     {
-        $message = \Swift_Message::newInstance()
+        $message = (new \Swift_Message())
             ->setSubject($this->messageParts['subject'])
             ->setFrom($this->fromEmail, $this->fromName)
             ->setTo($to)
