@@ -176,11 +176,11 @@ class MailSender
     /**
      * Adds a BCC address to the email.
      *
-     * @param string $address
+     * @param string $email
      * @param string $name
      * @return MailSender
      */
-    public function addBcc($address, $name = null)
+    public function addBcc($email, $name = null)
     {
         $this->bccAddresses[$email] = $name;
 
